@@ -281,9 +281,78 @@
             font-size: 1.1rem;
         }
 
-        .contact-item i {
-            font-size: 1.5rem;
-            margin-right: 15px;
+        /* Formulaire de contact */
+        .contact-form {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(44, 62, 80, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        .form-note {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
             color: #ecf0f1;
         }
 
@@ -572,17 +641,65 @@
                     </div>
                 </div>
                 
-                <div class="map-container scroll-animate">
-                    <div style="text-align: center;">
-                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #3498db; margin-bottom: 20px;"></i>
-                        <h3 style="color: #2c3e50; margin-bottom: 10px;">Notre localisation</h3>
-                        <p><strong>Cocody Angré</strong></p>
-                        <p>Abidjan, Côte d'Ivoire</p>
-                        <p style="margin-top: 20px; font-size: 0.9rem;">
-                            Quartier résidentiel et commercial<br>
-                            Facilement accessible
-                        </p>
-                    </div>
+                <div class="contact-form scroll-animate">
+                    <h3 style="margin-bottom: 30px; font-size: 1.8rem; text-align: center;">
+                        <i class="fas fa-paper-plane"></i> Contactez-nous
+                    </h3>
+                    
+                    <form id="contactForm" action="#" method="POST">
+                        <div class="form-group">
+                            <label for="nom">
+                                <i class="fas fa-user"></i> Nom complet *
+                            </label>
+                            <input type="text" id="nom" name="nom" required placeholder="Votre nom et prénom">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email *
+                            </label>
+                            <input type="email" id="email" name="email" required placeholder="votre.email@exemple.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telephone">
+                                <i class="fas fa-phone"></i> Téléphone
+                            </label>
+                            <input type="tel" id="telephone" name="telephone" placeholder="+225 XX XX XX XX XX">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sujet">
+                                <i class="fas fa-tag"></i> Sujet *
+                            </label>
+                            <select id="sujet" name="sujet" required>
+                                <option value="">Choisissez un sujet...</option>
+                                <option value="devis">Demande de devis</option>
+                                <option value="ordinateurs">Ordinateurs et laptops</option>
+                                <option value="imprimantes">Imprimantes</option>
+                                <option value="tablettes">Tablettes et smartphones</option>
+                                <option value="accessoires">Accessoires bureautiques</option>
+                                <option value="livraison">Questions sur la livraison</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">
+                                <i class="fas fa-comment"></i> Message *
+                            </label>
+                            <textarea id="message" name="message" required placeholder="Décrivez vos besoins en équipements bureautiques, quantités souhaitées, délais, etc."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Envoyer ma demande
+                        </button>
+                        
+                        <div class="form-note">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Réponse rapide :</strong> Nous vous répondons sous 24h avec un devis personnalisé aux meilleurs prix du marché !
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -705,6 +822,48 @@
             item.addEventListener('mouseleave', () => {
                 item.style.transform = 'translateY(0) scale(1)';
                 item.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            });
+        });
+
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Animation du bouton
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            // Simulation d'envoi (remplacer par vraie fonction d'envoi)
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Message envoyé !';
+                submitBtn.style.background = 'linear-gradient(45deg, #27ae60, #229954)';
+                
+                // Réinitialiser après 3 secondes
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+                    submitBtn.disabled = false;
+                    
+                    // Optionnel : réinitialiser le formulaire
+                    document.getElementById('contactForm').reset();
+                    
+                    // Message de confirmation
+                    alert('Merci ! Votre message a été envoyé. Nous vous répondrons sous 24h avec un devis personnalisé.');
+                }, 3000);
+            }, 2000);
+        });
+
+        // Validation en temps réel
+        document.querySelectorAll('input[required], textarea[required], select[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderLeft = '4px solid #e74c3c';
+                } else {
+                    this.style.borderLeft = '4px solid #27ae60';
+                }
             });
         });
     </script>
